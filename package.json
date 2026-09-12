@@ -1,0 +1,10 @@
+{
+  "name": "devops-project-1",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
