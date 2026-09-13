@@ -309,11 +309,24 @@ After GitHub Actions finishes:
 ✓ FULL CI/CD PIPELINE WORKING! 🎉
 <img width="1917" height="977" alt="Screenshot 2026-09-12 162855" src="https://github.com/user-attachments/assets/8dbf719d-df97-44c1-b9eb-e7779952625b" />
 
-Technologies You Learned:
-✅ AWS EC2 (Cloud servers)
-✅ Docker (Container packaging)
-✅ Kubernetes (Container orchestration)
-✅ GitHub Actions (Automation)
-✅ GitHub (Code repository)
-✅ Docker Hub (Container registry)
-✅ Linux/Terminal commands
+🎓 Key Learnings
+
+Through this project, I gained practical experience in:
+
+Designing a basic CI/CD workflow
+
+Building and managing Docker images
+
+Working with GitHub Actions
+
+Deploying containerized applications using Kubernetes
+
+Managing Kubernetes Deployments and Services
+
+Working with AWS EC2
+
+Troubleshooting deployment issues
+
+Using Git and GitHub for version control
+
+Managing sensitive CI/CD information using GitHub Secrets
