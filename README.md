@@ -62,6 +62,8 @@ Before you begin, ensure you have:
 - Storage: 30 GB
 - Security Group: Allow SSH (22), HTTP (8080), NodePort (30080)
 ```
+<img width="1917" height="980" alt="Screenshot 2026-09-12 171600" src="https://github.com/user-attachments/assets/e84fdd2d-fd16-4acb-a0b2-a00f88890ee1" />
+
 
 ### 2. Connect to EC2
 
@@ -98,6 +100,9 @@ sudo mv minikube-linux-amd64 /usr/local/bin/minikube
 minikube start --driver=docker --nodes 2
 kubectl get nodes
 ```
+<img width="1917" height="1025" alt="Screenshot 2026-09-12 172105" src="https://github.com/user-attachments/assets/8dd1e3fb-71a3-4e66-8371-fce2b95e42d6" />
+<img width="1916" height="1022" alt="Screenshot 2026-09-12 172423" src="https://github.com/user-attachments/assets/f29b30c0-86ea-4ca7-b371-e6bd373b3dd7" />
+
 
 ### 4. Clone Repository
 
@@ -105,20 +110,7 @@ kubectl get nodes
 git clone git@github.com:YOUR-USERNAME/DevOps-cicd-pipeline.git
 cd DevOps-cicd-pipeline
 ```
-
 ### 5. Add GitHub Secrets
-
-Navigate to: **Repository → Settings → Secrets and Variables → Actions**
-
-Add these 5 secrets:
-
-| Secret Name | Value |
-|------------|-------|
-| `DOCKER_USERNAME` | Your Docker Hub username |
-| `DOCKER_PASSWORD` | Docker Hub access token |
-| `EC2_HOST` | Your EC2 public IP |
-| `EC2_USER` | `ubuntu` |
-| `EC2_SSH_KEY` | Your EC2 private key |
 
 ### 6. Deploy Manually (First Time)
 
@@ -202,6 +194,8 @@ git push origin main
 - Pulls Docker image from Docker Hub
 - Configures container port (3000)
 - Sets image pull policy to Always (get latest)
+- <img width="1917" height="1008" alt="Screenshot 2026-09-12 172551" src="https://github.com/user-attachments/assets/2fe6de97-1c0e-490a-9d18-a36a706b2e1c" />
+
 
 ### `k8s/service.yml`
 **Purpose:** Kubernetes service configuration  
@@ -209,6 +203,7 @@ git push origin main
 - Exposes application outside cluster using NodePort
 - Maps port 3000 to 30080 (external access)
 - Selects pods with label "app: demo-app"
+<img width="1917" height="1020" alt="Screenshot 2026-09-12 172614" src="https://github.com/user-attachments/assets/e430c653-0661-4137-a411-e288e5b78323" />
 
 ### `.github/workflows/ci-cd.yml`
 **Purpose:** GitHub Actions automation workflow  
@@ -237,3 +232,88 @@ Workflow automatically starts (view in Actions tab)
 
 ### **Step 3: Build Docker Image**
 GitHub Actions builds container from Dockerfile
+<img width="1917" height="1011" alt="Screenshot 2026-09-12 172529" src="https://github.com/user-attachments/assets/618cf26c-ec43-4d0e-b8dc-43df71bf32d8" />
+
+### **Step 4: Push to Docker Hub**
+Built image uploaded to Docker Hub registry
+
+### **Step 5: SSH to EC2**
+GitHub Actions connects to EC2 using SSH key
+
+### **Step 6: Update Kubernetes**
+Kubernetes deployment updated with new image
+```bash
+kubectl set image deployment/demo-app demo-app=omkarmane44/demo-app:latest
+```
+
+### **Step 7: Rollout**
+Old pods terminated, new pods started with new image
+
+### **Step 8: Verify Deployment**
+GitHub Actions confirms deployment success
+
+### **Result: Application Live!**
+New version running in seconds ⚡
+
+---
+
+## 🔍 Monitoring & Debugging
+
+### Check Deployment Status
+```bash
+kubectl get deploy
+kubectl get pods
+kubectl get svc
+```
+<img width="1916" height="926" alt="Screenshot 2026-09-12 173637" src="https://github.com/user-attachments/assets/f4bfccd4-8f0d-4020-a33d-daa311786030" />
+
+
+### View Pod Logs
+```bash
+kubectl logs -f <pod-name>
+```
+<img width="1916" height="926" alt="Screenshot 2026-09-12 173637" src="https://github.com/user-attachments/assets/7b69b0fe-d6b2-411f-aa70-44252af3662e" />
+
+
+### Describe Pod (detailed info)
+```bash
+kubectl describe pod <pod-name>
+```
+
+### Watch GitHub Actions
+Go to: **GitHub → Repository → Actions → Click workflow run**
+
+### SSH to EC2 and Check Kubernetes
+```bash
+# List all resources
+kubectl get all
+
+# Check service endpoints
+kubectl get endpoints demo-app-service
+
+# Describe deployment
+kubectl describe deployment demo-app
+```
+
+---
+
+Step 11.7: Verify Updated Application
+
+After GitHub Actions finishes:
+
+1. In your browser, refresh the page:
+   http://YOUR-EC2-IP:8080
+2. You should now see:
+   Welcome To DevOps CI/CD Project - Version 2.0
+
+✓ FULL CI/CD PIPELINE WORKING! 🎉
+<img width="1917" height="977" alt="Screenshot 2026-09-12 162855" src="https://github.com/user-attachments/assets/8dbf719d-df97-44c1-b9eb-e7779952625b" />
+
+Technologies You Learned:
+✅ AWS EC2 (Cloud servers)
+✅ Docker (Container packaging)
+✅ Kubernetes (Container orchestration)
+✅ GitHub Actions (Automation)
+✅ GitHub (Code repository)
+✅ Docker Hub (Container registry)
+✅ Linux/Terminal commands
